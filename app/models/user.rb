@@ -7,4 +7,10 @@ class User < ApplicationRecord
 
   # == Validations =============================================
   validates :email, :encrypted_password, :first_name, :last_name, presence: true
+
+  # == Enums ===================================================
+  enum role: {
+    patient: 0,
+    doctor: 1,
+  }
 end

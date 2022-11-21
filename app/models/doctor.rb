@@ -3,4 +3,5 @@ class Doctor < User
 
   # == Associations ===========================================
   belongs_to :specialty, required: true
+  belongs_to :cabinet, required: true
 end

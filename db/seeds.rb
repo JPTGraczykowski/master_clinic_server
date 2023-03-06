@@ -1,4 +1,19 @@
 [
+  { name: 'Allergy and immunology' },
+  { name: 'Dermatology' },
+  { name: 'Family medicine' },
+  { name: 'Neurology' },
+  { name: 'Gynecology' },
+  { name: 'Ophthalmology' },
+  { name: 'Pathology' },
+  { name: 'Pediatrics' },
+  { name: 'Psychiatry' },
+  { name: 'Urology' },
+].each do |specialty|
+  Specialty.find_or_create_by(specialty)
+end
+
+[
   { name: '0-01', floor: 0 },
   { name: '0-02', floor: 0 },
   { name: '0-03', floor: 0 },

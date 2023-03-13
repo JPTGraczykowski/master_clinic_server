@@ -23,10 +23,18 @@ class Selectors::SelectorController < ApplicationController
   end
 
   def serialize_collection(items)
-    #  TODO: add serialization
+    items.map do |item|
+      {
+        id: item.id,
+        text: item.select_label,
+      }
+    end
   end
 
   def serialize_record(item)
-    #  TODO: add serialization
+    {
+      id: item.id,
+      text: item.select_label,
+    }
   end
 end

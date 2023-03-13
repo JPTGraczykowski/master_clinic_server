@@ -6,6 +6,8 @@ class ApplicationController < ActionController::API
 
   respond_to :json
 
+  rescue_from Errors::NotAuthorizedError, with: :forbidden_response
+
   protected
 
   def configure_permitted_parameters
@@ -29,5 +31,15 @@ class ApplicationController < ActionController::API
       :active,
       :cabinet_id,
     ]
+  end
+
+  def authenticate_admin!
+    unless current_user.role_admin?
+      raise Errors::NotAuthorizedError
+    end
+  end
+
+  def forbidden_response
+    head :forbidden
   end
 end

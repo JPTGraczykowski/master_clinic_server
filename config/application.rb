@@ -36,5 +36,7 @@ module MasterClinicServer
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    config.autoload_paths += Dir["#{config.root}/lib/master_clinic_server/**/"]
+    config.eager_load_paths += ["#{config.root}/lib/master_clinic_server"]
   end
 end

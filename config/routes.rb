@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   namespace :selectors do
     resources :cabinets, only: [:index, :show]
   end
+
+  resources :doctors, only: [:show, :update, :destroy]
 end

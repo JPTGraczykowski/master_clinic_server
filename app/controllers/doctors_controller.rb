@@ -51,7 +51,6 @@ class DoctorsController < ApplicationController
       :telephone,
       :specialty_id,
       :cabinet_id,
-      :active,
     ]
   end
 

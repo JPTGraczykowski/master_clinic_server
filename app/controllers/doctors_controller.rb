@@ -1,9 +1,15 @@
 class DoctorsController < ApplicationController
-  before_action :authenticate_admin!, only: [:create, :destroy]
+  before_action :authenticate_admin!, only: [:new, :create, :destroy]
   before_action :set_doctor, except: [:create]
 
   def show
     render_response(@doctor) { true }
+  end
+
+  def new
+    @doctor = Doctor.new
+
+    render_response(@doctor)
   end
 
   def create

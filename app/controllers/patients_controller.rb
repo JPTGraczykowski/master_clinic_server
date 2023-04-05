@@ -1,5 +1,5 @@
 class PatientsController < ApplicationController
-  before_action :set_patient, only: [:show, :update, :delete]
+  before_action :set_patient, only: [:show, :update, :archive]
 
   def show
     render_response(@patient) { true }
@@ -38,8 +38,8 @@ class PatientsController < ApplicationController
     @patient = Patient.find(params[:id])
   end
 
-  def serialize_record
-    PatientSerializer.new(@patient).serialized_json
+  def serialize_record(record)
+    PatientSerializer.new(record).serializable_hash
   end
 
   def common_params_keys

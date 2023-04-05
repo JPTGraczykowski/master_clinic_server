@@ -1,5 +1,5 @@
 class DoctorsController < ApplicationController
-  before_action :authenticate_admin!, only: [:new, :create, :destroy]
+  before_action :authenticate_admin!, only: [:new, :create, :archive]
   before_action :set_doctor, except: [:create]
 
   def show
@@ -39,8 +39,8 @@ class DoctorsController < ApplicationController
     @doctor = Doctor.find(params[:id])
   end
 
-  def serialize_record
-    DoctorSerializer.new(@doctor).serializable_hash
+  def serialize_record(record)
+    DoctorSerializer.new(record).serializable_hash
   end
 
   def common_params_keys

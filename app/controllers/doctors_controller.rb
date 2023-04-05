@@ -3,38 +3,23 @@ class DoctorsController < ApplicationController
   before_action :set_doctor, except: [:create]
 
   def show
-    render(json: serialize_doctor, status: :ok)
+    render_response(@doctor) { true }
   end
 
   def create
     @doctor = Doctor.new(create_doctor_attributes)
 
-    if @doctor.save
-      render(json: serialize_doctor, status: :ok)
-    else
-      render(json: { message: @doctor.errors.full_messages },
-             status: :unprocessable_entity)
-    end
+    render_response(@doctor, status: :created) { @doctor.save }
   end
 
   def update
     @doctor.assign_attributes(doctor_attributes)
 
-    if @doctor.save
-      render(json: serialize_doctor, status: :ok)
-    else
-      render(json: { message: @doctor.errors.full_messages },
-             status: :unprocessable_entity)
-    end
+    render_response(@doctor) { @doctor.save }
   end
 
   def destroy
-    if @doctor.destroy
-      head :ok
-    else
-      render(json: { message: @doctor.errors.full_messages },
-             status: :unprocessable_entity)
-    end
+    proceed_deletion(@doctor)
   end
 
   private
@@ -43,7 +28,7 @@ class DoctorsController < ApplicationController
     @doctor = Doctor.find(params[:id])
   end
 
-  def serialize_doctor
+  def serialize_record
     DoctorSerializer.new(@doctor).serializable_hash
   end
 

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   namespace :selectors do
     resources :cabinets, only: [:index, :show]
+    resources :specialties, only: [:index, :show]
   end
 
   resources :doctors, except: [:edit] do

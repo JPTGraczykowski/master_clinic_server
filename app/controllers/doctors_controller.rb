@@ -7,7 +7,7 @@ class DoctorsController < ApplicationController
   end
 
   def create
-    @doctor = Doctor.new(doctor_attributes)
+    @doctor = Doctor.new(create_doctor_attributes)
 
     if @doctor.save
       render(json: serialize_doctor, status: :ok)
@@ -47,15 +47,26 @@ class DoctorsController < ApplicationController
     DoctorSerializer.new(@doctor).serializable_hash
   end
 
-  def doctor_attributes
-    params.require(:doctor).permit(
+  def common_params_keys
+    [
       :email,
       :first_name,
       :last_name,
       :telephone,
       :specialty_id,
       :cabinet_id,
-      :active
+      :active,
+    ]
+  end
+
+  def doctor_attributes
+    params.require(:doctor).permit(common_params_keys)
+  end
+
+  def create_doctor_attributes
+    params.require(:doctor).permit(
+      *common_params_keys,
+      :password
     )
   end
 end

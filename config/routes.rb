@@ -6,5 +6,5 @@ Rails.application.routes.draw do
     resources :cabinets, only: [:index, :show]
   end
 
-  resources :doctors, only: [:show, :update, :destroy]
+  resources :doctors, only: [:show, :create, :update, :destroy]
 end

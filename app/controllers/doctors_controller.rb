@@ -24,8 +24,13 @@ class DoctorsController < ApplicationController
     render_response(@doctor) { @doctor.save }
   end
 
-  def destroy
-    proceed_deletion(@doctor)
+  def archive
+    if @doctor.update(active: false)
+      head :ok
+    else
+      render(json: { message: @doctor.errors.full_messages },
+             status: :unprocessable_entity)
+    end
   end
 
   private

@@ -10,7 +10,8 @@ class User < ApplicationRecord
 
   # == Enums ===================================================
   enum role: {
-    patient: 0,
+    admin: 0,
     doctor: 1,
-  }
+    patient: 2,
+  }, _prefix: true
 end

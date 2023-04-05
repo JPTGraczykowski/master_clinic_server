@@ -2,7 +2,6 @@ class ApplicationController < ActionController::API
   include ActionController::MimeResponds
 
   before_action :authenticate_user!
-  before_action :configure_permitted_parameters, if: :devise_controller?
 
   respond_to :json
 
@@ -10,27 +9,26 @@ class ApplicationController < ActionController::API
 
   protected
 
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: user_sign_up_keys)
-    devise_parameter_sanitizer.permit(:account_update, keys: user_account_update_keys)
+  def render_response(record, status: :ok, &trigger)
+    if yield trigger
+      render(json: serialize_record(record), status: status)
+    else
+      render(json: { message: record.errors.full_messages },
+             status: :unprocessable_entity)
+    end
   end
 
-  def user_sign_up_keys
-    [
-      :first_name,
-      :last_name,
-      :telephone,
-    ]
+  def serialize_record(record)
+    raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
   end
 
-  def user_account_update_keys
-    [
-      :first_name,
-      :last_name,
-      :telephone,
-      :active,
-      :cabinet_id,
-    ]
+  def proceed_deletion(record)
+    if record.destroy
+      head :ok
+    else
+      render(json: { message: record.errors.full_messages },
+             status: :unprocessable_entity)
+    end
   end
 
   def authenticate_admin!

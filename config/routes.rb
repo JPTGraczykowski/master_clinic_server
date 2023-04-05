@@ -6,7 +6,10 @@ Rails.application.routes.draw do
     resources :cabinets, only: [:index, :show]
   end
 
-  resources :doctors, only: [:show, :create, :update, :destroy] do
+  resources :doctors, except: [:edit] do
+    patch :archive, on: :member
+  end
+  resources :patients, except: [:edit] do
     patch :archive, on: :member
   end
 end

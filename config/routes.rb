@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   resources :patients, except: [:edit] do
     patch :archive, on: :member
   end
+  resources :appointments, except: [:edit]
 end

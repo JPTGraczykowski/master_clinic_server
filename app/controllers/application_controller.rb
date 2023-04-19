@@ -37,6 +37,12 @@ class ApplicationController < ActionController::API
     end
   end
 
+  def authenticate_not_patient!
+    if current_user.role_patient?
+      raise Errors::NotAuthorizedError
+    end
+  end
+
   def forbidden_response
     head :forbidden
   end

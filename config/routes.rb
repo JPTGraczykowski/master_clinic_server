@@ -15,4 +15,5 @@ Rails.application.routes.draw do
     patch :archive, on: :member
   end
   resources :appointments, except: [:edit]
+  resources :datetime_slots, except: [:edit]
 end

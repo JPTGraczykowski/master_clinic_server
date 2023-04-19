@@ -1,4 +1,5 @@
 class AppointmentsController < ApplicationController
+  before_action :authenticate_not_patient!, only: [:update, :destroy]
   before_action :scope_appointments, only: [:index]
   before_action :set_appointment, only: [:show, :update, :destroy]
 
@@ -29,16 +30,11 @@ class AppointmentsController < ApplicationController
   def update
     @appointment.assign_attributes(update_appointment_params)
 
-    render_response(@appointment) { !current_user.role_patient? && @appointment.save }
+    render_response(@appointment) { @appointment.save }
   end
 
   def destroy
-    if !current_user.role_patient? && @appointment.destroy
-      head :ok
-    else
-      render(json: { message: @appointment.errors.full_messages },
-             status: :unprocessable_entity)
-    end
+    proceed_deletion(@appointment)
   end
 
   private

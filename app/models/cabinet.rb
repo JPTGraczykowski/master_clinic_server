@@ -7,7 +7,8 @@ class Cabinet < ApplicationRecord
   }
 
   # == Instance Methods ======================================
-  def select_label
+  def cabinet_label
     "#{name}, Floor: #{floor}"
   end
+  alias_method :select_label, :cabinet_label
 end

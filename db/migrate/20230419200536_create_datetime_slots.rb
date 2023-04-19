@@ -5,5 +5,7 @@ class CreateDatetimeSlots < ActiveRecord::Migration[6.1]
       t.datetime :slot_datetime, null: false
       t.timestamps
     end
+
+    add_reference :appointments, :datetime_slot, foreign_key: true, null: false
   end
 end

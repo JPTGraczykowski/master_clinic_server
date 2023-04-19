@@ -3,7 +3,7 @@ class Appointment < ApplicationRecord
   belongs_to :specialty, required: true
   belongs_to :patient, required: true
   belongs_to :doctor, required: true
-  # belongs_to :datetime_slot, required: true
+  belongs_to :datetime_slot, required: true
   belongs_to :cabinet
 
   # == Scopes ================================================

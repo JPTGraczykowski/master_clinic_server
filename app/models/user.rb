@@ -14,4 +14,9 @@ class User < ApplicationRecord
     doctor: 1,
     patient: 2,
   }, _prefix: true
+
+  # == Instance Methods =========================================
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 end

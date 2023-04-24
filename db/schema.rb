@@ -10,10 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_21_012017) do
+ActiveRecord::Schema.define(version: 2023_04_24_192955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "appointments", force: :cascade do |t|
+    t.bigint "specialty_id", null: false
+    t.bigint "patient_id", null: false
+    t.bigint "doctor_id", null: false
+    t.datetime "appointment_datetime", null: false
+    t.text "description"
+    t.bigint "cabinet_id"
+    t.text "before_visit"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "datetime_slot_id", null: false
+    t.index ["cabinet_id"], name: "index_appointments_on_cabinet_id"
+    t.index ["datetime_slot_id"], name: "index_appointments_on_datetime_slot_id"
+    t.index ["doctor_id"], name: "index_appointments_on_doctor_id"
+    t.index ["patient_id"], name: "index_appointments_on_patient_id"
+    t.index ["specialty_id"], name: "index_appointments_on_specialty_id"
+  end
 
   create_table "cabinets", force: :cascade do |t|
     t.string "name", null: false
@@ -22,10 +40,19 @@ ActiveRecord::Schema.define(version: 2022_11_21_012017) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "datetime_slots", force: :cascade do |t|
+    t.bigint "doctor_id", null: false
+    t.datetime "slot_datetime", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["doctor_id"], name: "index_datetime_slots_on_doctor_id"
+  end
+
   create_table "specialties", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "default_before_visit"
     t.index ["name"], name: "index_specialties_on_name", unique: true
   end
 
@@ -48,4 +75,10 @@ ActiveRecord::Schema.define(version: 2022_11_21_012017) do
     t.index ["specialty_id"], name: "index_users_on_specialty_id"
   end
 
+  add_foreign_key "appointments", "cabinets"
+  add_foreign_key "appointments", "datetime_slots"
+  add_foreign_key "appointments", "specialties"
+  add_foreign_key "appointments", "users", column: "doctor_id"
+  add_foreign_key "appointments", "users", column: "patient_id"
+  add_foreign_key "datetime_slots", "users", column: "doctor_id"
 end

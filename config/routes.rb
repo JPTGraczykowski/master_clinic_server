@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   namespace :selectors do
     resources :cabinets, only: [:index, :show]
     resources :specialties, only: [:index, :show]
+    resources :datetime_slots, only: [:index, :show]
   end
 
   resources :doctors, except: [:edit] do
@@ -13,4 +14,6 @@ Rails.application.routes.draw do
   resources :patients, except: [:edit] do
     patch :archive, on: :member
   end
+  resources :appointments, except: [:edit]
+  resources :datetime_slots, except: [:edit]
 end

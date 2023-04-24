@@ -21,7 +21,9 @@ class Appointment < ApplicationRecord
   }
 
   # == Callbacks =============================================
-  before_validation :assign_cabinet, :assign_appointment_datetime
+  before_validation :assign_cabinet,
+                    :assign_appointment_datetime,
+                    :assign_default_before_visit
 
   # == Instance Methods ======================================
   def address
@@ -36,7 +38,7 @@ class Appointment < ApplicationRecord
     self.cabinet ||= doctor&.cabinet
   end
 
-  # def assign_default_before_visit
-  #   self.before_visit ||= specialty.default_before_visit
-  # end
+  def assign_default_before_visit
+    self.before_visit ||= specialty.default_before_visit
+  end
 end

@@ -13,15 +13,30 @@ class Appointment < ApplicationRecord
   scope :with_doctor_id, ->(doctor_id) {
     where(doctor_id: doctor_id)
   }
-  scope :upcoming, ->(_) {
+  scope :upcoming, -> {
     where("appointment_datetime >= ?", Time.current)
   }
-  scope :past, ->(_) {
+  scope :past, -> {
     where("appointment_datetime < ?", Time.current)
   }
 
-  # == Instance Methods =======================================
+  # == Callbacks =============================================
+  before_validation :assign_cabinet, :assign_appointment_datetime
+
+  # == Instance Methods ======================================
   def address
     cabinet&.cabinet_label
   end
+
+  def assign_appointment_datetime
+    self.appointment_datetime ||= datetime_slot&.slot_datetime
+  end
+
+  def assign_cabinet
+    self.cabinet ||= doctor&.cabinet
+  end
+
+  # def assign_default_before_visit
+  #   self.before_visit ||= specialty.default_before_visit
+  # end
 end

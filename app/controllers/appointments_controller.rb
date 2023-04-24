@@ -1,6 +1,6 @@
 class AppointmentsController < ApplicationController
   before_action :authenticate_not_patient!, only: [:update, :destroy]
-  before_action :scope_appointments, only: [:index]
+  before_action :set_appointments_collection, only: [:index]
   before_action :set_appointment, only: [:show, :update, :destroy]
 
   def index
@@ -41,29 +41,38 @@ class AppointmentsController < ApplicationController
 
   def scope_appointments
     if current_user.role_admin?
-      @appointments = Appointment.all
+      Appointment.all
     elsif current_user.role_doctor?
-      @appointments = Appointment.with_doctor_id(current_user.id)
+      Appointment.with_doctor_id(current_user.id)
     elsif current_user.role_patient?
-      @appointments = Appointment.with_patient_id(current_user.id)
+      Appointment.with_patient_id(current_user.id)
     end
   end
 
+  def set_appointments_collection
+    @appointments = scope_appointments
+  end
+
   def set_appointment
-    @appointment = Appointment.find(params[:id])
+    @appointment = scope_appointments.find(params[:id])
   end
 
   def serialize_record(record)
     AppointmentSerializer.new(record).serializable_hash
   end
 
+  def param_patient_id
+    params[:appointment][:patient_id] || current_user.id
+  end
+
   def crate_appointment_params
     params.require(:appointment).permit(
       :specialty_id,
       :doctor_id,
-      :patient_id,
-      :datetime_slot,
+      :datetime_slot_id,
       :description,
+    ).merge(
+      patient_id: param_patient_id,
     )
   end
 

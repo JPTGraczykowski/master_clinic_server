@@ -32,6 +32,7 @@ class Appointment < ApplicationRecord
 
   def assign_appointment_datetime
     self.appointment_datetime ||= datetime_slot&.slot_datetime
+    datetime_slot.is_free = false
   end
 
   def assign_cabinet

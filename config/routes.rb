@@ -3,9 +3,10 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   namespace :selectors do
-    resources :cabinets, only: [:index, :show]
-    resources :specialties, only: [:index, :show]
-    resources :datetime_slots, only: [:index, :show]
+    resources :cabinets, only: [:index]
+    resources :specialties, only: [:index]
+    resources :datetime_slots, only: [:index]
+    resources :doctors, only: [:index]
   end
 
   resources :doctors, except: [:edit] do

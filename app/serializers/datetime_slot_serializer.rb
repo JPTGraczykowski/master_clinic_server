@@ -3,7 +3,8 @@ class DatetimeSlotSerializer
 
   attributes :id,
              :doctor_id,
-             :slot_datetime
+             :slot_datetime,
+             :is_free
 
   attribute :doctor do |datetime_slot|
     {

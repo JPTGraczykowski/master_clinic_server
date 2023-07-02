@@ -11,8 +11,6 @@ class DatetimeSlot < ApplicationRecord
     where(doctor_id: doctor_id)
   }
   scope :available, -> {
-    includes(:appointment)
-      .where
-      .not(appointments: { datetime_slot_id: null })
+    where(is_free: true)
   }
 end

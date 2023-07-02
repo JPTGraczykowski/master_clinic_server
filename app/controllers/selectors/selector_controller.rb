@@ -8,18 +8,10 @@ class Selectors::SelectorController < ApplicationController
     render(json: serialize_collection(@collection), status: :ok)
   end
 
-  def show
-    render(json: serialize_record(@record), status: :ok)
-  end
-
   protected
 
   def set_collection
     raise "#{controller_name} controller should implement set_collection method"
-  end
-
-  def set_record
-    raise "#{controller_name} controller should implement set_record_method"
   end
 
   def serialize_collection(items)
@@ -29,12 +21,5 @@ class Selectors::SelectorController < ApplicationController
         text: item.select_label,
       }
     end
-  end
-
-  def serialize_record(item)
-    {
-      id: item.id,
-      text: item.select_label,
-    }
   end
 end

@@ -7,4 +7,6 @@ class PatientSerializer
              :last_name,
              :telephone,
              :active
+
+  attribute :full_name, &:full_name
 end

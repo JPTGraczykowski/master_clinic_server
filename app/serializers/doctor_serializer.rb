@@ -8,6 +8,8 @@ class DoctorSerializer
              :telephone,
              :active
 
+  attribute :full_name, &:full_name
+
   attribute :specialty do |doctor|
     {
       id: doctor.specialty_id,

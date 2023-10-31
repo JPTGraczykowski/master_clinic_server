@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :specialties, only: [:index]
     resources :datetime_slots, only: [:index]
     resources :doctors, only: [:index]
+    resources :patients, only: [:index]
   end
 
   resources :doctors, except: [:edit] do

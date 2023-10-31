@@ -19,4 +19,5 @@ class User < ApplicationRecord
   def full_name
     "#{first_name} #{last_name}"
   end
+  alias_method :select_label, :full_name
 end

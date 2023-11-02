@@ -43,8 +43,10 @@ class DatetimeSlotsController < ApplicationController
 
   def datetime_slot_params
     params.require(:datetime_slot).permit(
-      :doctor_id,
-      :slot_datetime
+      :slot_datetime,
+      :is_free,
+    ).merge(
+      doctor_id: current_user.id,
     )
   end
 end

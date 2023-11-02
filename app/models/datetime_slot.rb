@@ -13,4 +13,9 @@ class DatetimeSlot < ApplicationRecord
   scope :available, -> {
     where(is_free: true)
   }
+
+  # == Instance Methods ======================================
+  def select_label
+    slot_datetime
+  end
 end

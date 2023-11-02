@@ -5,6 +5,9 @@ class Cabinet < ApplicationRecord
   scope :search_for_select_input, ->(param) {
     where("name ILIKE ?", "%#{param}%")
   }
+  scope :with_doctor_id, ->(doctor_id) {
+    joins(:doctors).where(doctors: { id: doctor_id })
+  }
 
   # == Instance Methods ======================================
   def cabinet_label

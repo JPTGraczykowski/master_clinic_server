@@ -18,4 +18,5 @@ Rails.application.routes.draw do
   end
   resources :appointments, except: [:edit]
   resources :datetime_slots, except: [:edit]
+  resources :cabinets, except: [:edit]
 end

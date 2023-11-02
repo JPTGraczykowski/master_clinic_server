@@ -4,7 +4,7 @@ class CabinetsController < ApplicationController
 
   def index
     @cabinets = Cabinet.with_doctor_id(current_user.id)
-    @cabinets = @cabinets.order(:slot_datetime)
+    @cabinets = @cabinets.order(:name)
 
     render_response(@cabinets) { true }
   end

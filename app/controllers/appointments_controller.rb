@@ -1,5 +1,5 @@
 class AppointmentsController < ApplicationController
-  before_action :authenticate_not_patient!, only: [:update, :destroy]
+  before_action :authenticate_not_patient!, only: [:destroy]
   before_action :set_appointments_collection, only: [:index]
   before_action :set_appointment, only: [:show, :update, :destroy]
 
@@ -80,6 +80,7 @@ class AppointmentsController < ApplicationController
     params.require(:appointment).permit(
       :before_visit,
       :cabinet_id,
+      :description,
     )
   end
 end
